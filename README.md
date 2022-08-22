@@ -4,6 +4,7 @@ NoActive正如其名，让Android后台CPU不再活跃
 通过Hook系统框架实现Android墓碑
 
 **作用域说明**：
+
 **系统框架**：
 1、Hook应用切换事件，冻结切换至后台的应用，解冻切换至前台的应用
 2、Hook广播分发事件，屏蔽被冻结的应用接收广播，从而避免触发广播ANR
@@ -11,11 +12,13 @@ NoActive正如其名，让Android后台CPU不再活跃
 4、Hook系统ANR事件，由于冻结之后，应用无法做出响应被系统认为是ANR，所以需要屏蔽ANR避免系统误杀被冻结的APP
 5、Hook系统是否开启暂停执行已缓存变量获取，由于系统自带的暂停执行已缓存在收到广播后可能解冻再次活跃
 6、Hook显示暂停执行已缓存开关，仅显示无作用(Happy freezer)
+
 **电量和性能(MIUI)**：
 1、Hook杀进程方法，阻止电量性能杀后台
 2、禁用millet，该功能与NoActive重复
 
 **冻结方式说明**：
+
 目前Linux进程冻结方式有Kill -19、Kill -20、Cgroup Freezer V1、Cgroup Freezer V2
 Kill -19和Kill -20兼容性最好，但是存在Bug，进程还在依然重载
 Google官方使用Cgroup Freezer V2
@@ -31,13 +34,18 @@ Cgroup Freezer V1和V2采用NoActive参考millet自行实现并封装，或V2调
     magiskpolicy --live "allow system_server * process {sigstop}"
 
 **配置文件说明**：
+
 目录 /data/system/NoActive
+
 **即时生效配置**：
+
 blackSystemApp.conf 系统黑名单(系统APP默认白名单)
 killProcess.conf 杀死进程名单(后台3S杀死进程)
 whiteApp.conf 白名单APP(用户APP默认黑名单)
 whiteProcess.conf 白名单进程(添加白名单APP无需添加)
+
 **重启生效配置(需要自己新建)**：
+
 debug 开启调试日志
 disable.oom 禁用修改oom_adj功能
 kill.19 使用Kill -19冻结
@@ -47,6 +55,7 @@ freezer.v2 使用Cgroup Freezer V2(NoActive)冻结
 freezer.api 使用Cgroup Freezer API(系统API)冻结
 
 **日志说明**：
+
 日志级别分为debug(调试信息)、info(基本信息)、warn(警告信息)、error(错误信息)
 
 **NoActive交流QQ群750812133**
