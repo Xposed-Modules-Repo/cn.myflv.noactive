@@ -20,6 +20,16 @@
 
 6、Hook显示暂停执行已缓存开关，仅显示无作用(Happy freezer)
 
+7、Hook获取PMS为冻结后的APP释放唤醒锁
+
+8、Hook接收小米Millet网络解冻
+
+9、Hook接收小米Binder通知
+
+10、Hook获取NMS为冻结后的APP断开网络连接
+
+11、Hook控制AppStandby为冻结后的APP限制后台
+
 **电量和性能(MIUI)**：
 1、Hook杀进程方法，阻止电量性能杀后台
 2、禁用millet，该功能与NoActive重复
