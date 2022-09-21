@@ -22,9 +22,9 @@
 
 7、Hook获取PMS为冻结后的APP释放唤醒锁
 
-8、Hook接收小米Millet网络解冻
+8、Hook接收小米Millet网络临时解冻APP
 
-9、Hook接收小米Binder通知
+9、Hook接收小米Binder通知临时解冻APP
 
 10、Hook获取NMS为冻结后的APP断开网络连接
 
@@ -38,62 +38,23 @@
 
 目前Linux进程冻结方式有Kill -19、Kill -20、Cgroup Freezer V1、Cgroup Freezer V2
 
-Kill -19和Kill -20兼容性最好，但是存在Bug，进程还在依然重载
+推荐 API & V2 > Kill -19 & Kill -20
 
-Google官方使用Cgroup Freezer V2
+首推API和V2其次Kill，小米MIUI13机子可以使用V1，其他机子使用V1会有内存泄露
 
-NoActive仅仅作用于系统框架，不是Root权限，权限不足
+Freezer天然优势，Kill存在一段时间后进程还在打开仍然重载
 
-Kill使用Android的Process.sendSignal，该方法为安卓封装间接调用Kill，所以可能存在部分系统19有效或者20有效，需要自测
+部分机子存在系统框架无法读写Freezer目录，可以开启提权模式，与Thanox的Su插件一样
 
-Cgroup Freezer V1和V2采用NoActive参考millet自行实现并封装，或V2调用安卓Process.setProcessFrozen实现
+关于白名单推送进程，需要同时白名单主进程，才不会被StandBy限制后台
 
-所以NoActive支持5种冻结方式分别为Kill -19、Kill -20、Cgroup Freezer V1(NoActive)、Cgroup Freezer V2(NoActive)、Cgroup Freezer V2(系统API)
-
-由于对System权限不足导致无法读取配置判断Cgroup Freezer版本，故Hook获取系统是否支持暂停执行已缓存来判断V2、其余皆为V1，如果测试没有效果，或者冻结error报错，请选择Kill方式，配置方式参考下面的配置文件说明。
-
-**如果5种模式都无法生效，可以切换Kill -19模式，在每次开机后执行以下命令**
-
-    su
-    magiskpolicy --live "allow system_server * process {sigstop}"
-
-**配置文件说明**：
-
-目录 /data/system/NoActive
-
-**即时生效配置**：
-
-blackSystemApp.conf 系统黑名单(系统APP默认白名单)
-
-killProcess.conf 杀死进程名单(后台3S杀死进程)
-
-whiteApp.conf 白名单APP(用户APP默认黑名单)
-
-whiteProcess.conf 白名单进程(添加白名单APP无需添加)
-
-**重启生效配置(需要自己新建)**：
-
-debug 开启调试日志
-
-disable.oom 禁用修改oom_adj功能
-
-kill.19 使用Kill -19冻结
-
-kill.20 使用kill -20冻结
-
-freezer.v1 使用Cgroup Freezer V1(NoActive)冻结
-
-freezer.v2 使用Cgroup Freezer V2(NoActive)冻结
-
-freezer.api 使用Cgroup Freezer API(系统API)冻结
+MIUI对APP开启保持连接，即可启用网络解冻，微信等即时通信APP必备
 
 **日志说明**：
 
 日志级别分为debug(调试信息)、info(基本信息)、warn(警告信息)、error(错误信息)
 
 **NoActive交流QQ群750812133**
-
-最新下载地址：[https://coolstars.lanzoum.com/i0wkH0a1se6f][2]
 
 
 > 如果你觉得模块不错，可以打赏开发者一瓶可乐(理性打赏)
