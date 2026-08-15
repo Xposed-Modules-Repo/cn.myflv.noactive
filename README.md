@@ -53,15 +53,3 @@ MIUI对APP开启保持连接，即可启用网络解冻，微信等即时通信A
 **日志说明**：
 
 日志级别分为debug(调试信息)、info(基本信息)、warn(警告信息)、error(错误信息)
-
-**NoActive交流QQ群750812133**
-
-
-> 如果你觉得模块不错，可以打赏开发者一瓶可乐(理性打赏)
-
-![如果你觉得模块不错，可以打赏开发者一瓶可乐][1]
-
-
-
-  [1]: https://m.360buyimg.com/babel/jfs/t1/112365/9/29244/36766/62e68cadE30683ff1/c4e6d9ef81b69e3c.jpg
-  [2]: https://coolstars.lanzoum.com/i0wkH0a1se6f
